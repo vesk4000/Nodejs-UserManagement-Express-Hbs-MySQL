@@ -38,7 +38,7 @@ exports.find = (req, res) => {
 }
 
 exports.form = (req, res) => {
-  res.render('add-user');
+  res.render('add-user', {alert: false});
 }
 
 // Add new user
@@ -63,7 +63,7 @@ exports.edit = (req, res) => {
   // User the connection
   connection.query('SELECT * FROM user WHERE id = ?', [req.params.id], (err, rows) => {
     if (!err) {
-      res.render('edit-user', { rows });
+      res.render('edit-user', { rows, alert: false });
     } else {
       console.log(err);
     }
