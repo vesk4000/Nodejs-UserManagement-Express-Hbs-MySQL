@@ -1,5 +1,4 @@
 const User = require("../models/user");
-const { get } = require("../server/routes/user");
 
 // Render active users
 exports.view = (req, res) => {
@@ -18,9 +17,9 @@ exports.view = (req, res) => {
 // Find user by search
 exports.find = (req, res) => {
 	let searchTerm = req.body.search;
-	users.fetchAll((users) => {
-		users = users.filter(user => user.first_name == searchTerm || user.last_name == searchTerm);
-		res.render('home', { users });
+	User.fetchAll((users) => {
+		const rows = users.filter(user => user.first_name.includes(searchTerm) || user.last_name.includes(searchTerm));
+		res.render('home', { rows });
 	});
 }
 
@@ -45,8 +44,8 @@ exports.create = (req, res) => {
 exports.edit = (req, res) => {
 	User.findById(req.params.id, (user) => {
 		if(user != null) {
-			const users = [user];
-			res.render('edit-user', { users });
+			const rows = [user];
+			res.render('edit-user', { rows });
 		}
 	});
 }
@@ -54,21 +53,23 @@ exports.edit = (req, res) => {
 
 // Update user by query
 exports.update = (req, res) => {
+	console.log("post /edituser/" + req.params.id + " called userController.update");
 	const { first_name, last_name, email, phone, comments } = req.body;
 	User.findById(req.params.id, (user) => {
 		if(user == null)
 			return;
-		if(user == null)
-			return;
+		console.log("user: " + user);
 		user.first_name = first_name;
 		user.last_name = last_name;
 		user.email = email;
 		user.phone = phone;
 		user.comments = comments;
-		const users = [user];
+		const rows = [user];
 		user.update((ret) => {
+			console.log("Went through update");
 			if(ret) {
-				res.render('edit-user', { users, alert: `${first_name} has been updated.` });
+				console.log("Update successful");
+				res.render('edit-user', { rows, alert: `${first_name} has been updated.` });
 			}
 		});
 	});
@@ -103,10 +104,12 @@ exports.delete = (req, res) => {
 
 // Render a certain user (by Id)
 exports.viewall = (req, res) => {
+	console.log("get /viewuser/" + req.params.id + " called " + "user_handler.js");
 	User.findById(req.params.id, (user) => {
+		console.log(`user: ${[user]}`);
 		if(user != null) {
-			const users = [user];
-			res.render('view-user', { users });
+			const rows = [user];
+			res.render('view-user', { rows });
 		}
 	});
 }

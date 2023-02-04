@@ -37,24 +37,31 @@ class User {
 
 	// Edit a user when you have their id
 	update(callback) {
+		console.log("user.update called");
 		let ans = false;
 		// User the connection
 		if (this.id == null) {
 			console.log("User doesn't have id - probaly hasn't been added to the database");
-			ans = true;
-			callback(ans);
+			callback(false);
 		}
 		else {
-			connection.query('SELECT * FROM user WHERE id = ?', [this.id], (err, rows) => {
-				if (!err) {
-					res.render('edit-user', { rows });
-					ans = true;
-				} else {
-					console.log(err);
-					ans = false;
+			console.log("Will do an update now");
+			connection.query('UPDATE user SET first_name = ?, last_name = ?, email = ?, phone = ?, comments = ? WHERE id = ?', [this.first_name, this.last_name, this.email, this.phone, this.comments, this.id], (err, rows) => {
+				console.log("update callback called");
+				if(err) {
+					callback(false);
+					return;
 				}
-				callback(ans);
+				connection.query('SELECT * FROM user WHERE id = ?', [this.id], (err, rows) => {
+					if (!err) {
+						callback(rows);
+					} else {
+						console.log(err);
+						callback(rows);
+					}
+				});
 			});
+			
 		}
 	}
 
