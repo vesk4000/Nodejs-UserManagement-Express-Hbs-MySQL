@@ -46,7 +46,7 @@ class User {
 		}
 		else {
 			console.log("Will do an update now");
-			connection.query('UPDATE user SET first_name = ?, last_name = ?, email = ?, phone = ?, comments = ? WHERE id = ?', [this.first_name, this.last_name, this.email, this.phone, this.comments, this.id], (err, rows) => {
+			connection.query('UPDATE user SET first_name = ?, last_name = ?, email = ?, phone = ?, comments = ?, status = ? WHERE id = ?', [this.first_name, this.last_name, this.email, this.phone, this.comments, this.status, this.id], (err, rows) => {
 				console.log("update callback called");
 				if(err) {
 					callback(false);

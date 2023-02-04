@@ -89,18 +89,28 @@ exports.delete = (req, res) => {
 	});
 }
 
-/*exports.deactivate = (req, res) => {
-	// Hide a record
-	connection.query('UPDATE user SET status = ? WHERE id = ?', ['removed', req.params.id], (err, rows) => {
-		if (!err) {
-			let removedUser = encodeURIComponent('User successeflly removed.');
-			res.redirect('/?removed=' + removedUser);
-		} else {
-			console.log(err);
+// Change activation status of user
+exports.activation = (req, res) => {
+	console.log("activation");
+	User.findById(req.params.id, (user) => {
+		if(user != null) {
+			if(user.status == 'active') {
+				user.status = 'none';
+			}
+			else if(user.status == 'none') {
+				user.status = 'active';
+			}
+			console.log(user.status);
+			user.update((ret) => {
+				console.log(ret);
+				if(ret) {
+					res.redirect('/');
+				}
+			});
 		}
-		console.log('The data from beer table are: \n', rows);
 	});
-}*/
+}
+
 
 // Render a certain user (by Id)
 exports.viewall = (req, res) => {

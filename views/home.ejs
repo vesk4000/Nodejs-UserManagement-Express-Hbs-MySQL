@@ -27,14 +27,20 @@
     </tr>
   </thead>
   <tbody>
+    
     <% for(var i = 0; i < rows.length; i++) { %>
-    <tr>
+    <tr style="<%= (rows[i].status == 'active' ? 'background-color: rgb(180, 255, 220)' : '')%>">
       <th scope="row"><%= rows[i].id %></th>
       <td><%= rows[i].first_name %></td>
       <td><%= rows[i].last_name %></td>
       <td><%= rows[i].email %></td>
       <td><%= rows[i].phone %></td>
       <td class="text-end">
+        <% if(rows[i].status == 'active') { %>
+          <a href="/activation/<%= rows[i].id %>" type="button" class="btn btn-light btn-small">Deactivate</a>
+        <% } else { %>
+          <a href="/activation/<%= rows[i].id %>" type="button" class="btn btn-light btn-small">Activate</a>
+        <% } %>
         <a href="/viewuser/<%= rows[i].id %>" type="button" class="btn btn-light btn-small"><i class="bi bi-eye"></i> View</a>
         <a href="/edituser/<%= rows[i].id %>" type="button" class="btn btn-light btn-small"><i class="bi bi-pencil"></i>
           Edit</a>

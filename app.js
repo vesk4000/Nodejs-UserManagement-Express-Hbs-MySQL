@@ -14,8 +14,6 @@ app.use(express.static('public'));
 
 // Templating Engine
 app.set('view engine', 'ejs');
-// app.set('views', 'views');
-// app.engine('ejs', ejs.renderFile);
 
 const routes = require('./routes/user');
 app.use('/', routes);
