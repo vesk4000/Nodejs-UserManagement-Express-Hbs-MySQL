@@ -1,5 +1,5 @@
 <%- include('header'); %>
-<% if (removedUser) { %>
+<% if (typeof removedUser != 'undefined') { %>
 <div class="alert alert-success alert-dismissible fade show" role="alert">
   User has been removed.
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

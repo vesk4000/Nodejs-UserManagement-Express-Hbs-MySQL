@@ -6,7 +6,7 @@ exports.view = (req, res) => {
 	User.fetchAll((rows) => {
 		console.log(rows);
 		if(rows != []) {
-			rows = rows.filter(user => user.status == "active");
+			//rows = rows.filter(user => user.status != "active");
 			let removedUser = req.query.removed;
 			console.log("Will render the home view now");
 			res.render('home', { rows, removedUser });
