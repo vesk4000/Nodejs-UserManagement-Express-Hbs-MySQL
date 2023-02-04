@@ -46,7 +46,7 @@
 // app.listen(port, () => console.log(`Listening on port ${port}`));
 
 const express = require('express');
-// const ejs = require('ejs');
+const ejs = require('ejs');
 
 require('dotenv').config();
 
